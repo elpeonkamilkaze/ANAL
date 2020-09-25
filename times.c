@@ -3,7 +3,6 @@
  * Descripcion: Implementation of time measurement functions
  *
  * Fichero: times.c
- * Autor: Carlos Aguirre Maeso
  * Version: 1.0
  */
 #include <time.h>
@@ -35,11 +34,10 @@ short average_sorting_time(pfunc_sort metodo,  int n_perms, int N, PTIME_AA ptim
     end = clock();
     time += (end-begin)/CLOCKS_PER_SEC;
     if(max>a) max=a;
+    if(min<a) min=a;
     count +=a;
   }
 }
-    
- /********************************/
 /* Function: generate_sorting_times Date:          */
 /*                                                 */
 /* Your documentation                              */

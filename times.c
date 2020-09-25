@@ -36,12 +36,13 @@ short average_sorting_time(pfunc_sort metodo,  int n_perms, int N, PTIME_AA ptim
     a = InsertSort(array[i],0,N);
     end = clock();
     time += (end-begin)/CLOCKS_PER_SEC;
-
+    if(max>a) max=a;
+    count +=a;HEIL HITLER
   }
 }
 /*******************
-    if(max>a) max=a;
-    count +=a;********************************/
+    
+    ********************************/
 /* Function: generate_sorting_times Date:          */
 /*                                                 */
 /* Your documentation                              */

@@ -37,7 +37,8 @@ short average_sorting_time(pfunc_sort metodo,  int n_perms, int N, PTIME_AA ptim
     end = clock();
     time += (end-begin)/CLOCKS_PER_SEC;
     if(max>a) max=a;
-    count +=a;HEIL HITLER
+    count +=a;
+    hola
   }
 }
 /*******************

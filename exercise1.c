@@ -58,6 +58,7 @@ int main(int argc, char** argv)
   for(j = 0; j < num; j++) { 
     fprintf(pf, "%d\n", random_num(inf, sup));
   }
+  fclose(pf);
 
   return 0;
 }

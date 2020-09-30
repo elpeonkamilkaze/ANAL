@@ -28,7 +28,7 @@ short average_sorting_time(pfunc_sort metodo,  int n_perms, int N, PTIME_AA ptim
   int **array;
   clock_t begin,end;
   double time=0;
-  
+ 
   array = generate_permutations(n_perms,N);
  begin = clock();
     a = InsertSort(array[i],0,N);

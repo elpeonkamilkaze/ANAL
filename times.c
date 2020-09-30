@@ -30,30 +30,31 @@ short average_sorting_time(pfunc_sort metodo,  int n_perms, int N, PTIME_AA ptim
   double time=0;
  
   array = generate_permutations(n_perms,N);
- begin = clock();
-    a = InsertSort(array[i],0,N);
-    end = clock();
-    time += (end-begin)/CLOCKS_PER_SEC; 
+  begin = clock();
+  a = InsertSort(array[i],0,N);
+  end = clock();
+  time += (end-begin)/CLOCKS_PER_SEC; 
 
   for (i=0; i<n_perms; i++){
     begin = clock();
     a = InsertSort(array[i],0,N);
     end = clock();
     time += (end-begin)/CLOCKS_PER_SEC;
-<<<<<<< HEAD
+
     if(max>a) max=a;
     if(min<a) min=a;
     count +=a;
   }
-}
-=======
 
-  }
+  ptime->max_ob = max;
+  ptime->min_ob = min;
+  ptime->N = N;
+  ptime->n_elems = 
 }
+
+
+
 /*******************
-    if(max>a) max=a;
-    count +=a;********************************/
->>>>>>> 9891c41bff00f20e8cae6b3e3ac5a7b0fffdd0be
 /* Function: generate_sorting_times Date:          */
 /*                                                 */
 /* Your documentation                              */

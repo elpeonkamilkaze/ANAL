@@ -22,6 +22,9 @@ int main(int argc, char** argv)
 {
   int i;
   unsigned int inf, sup, num, j;
+  FILE *pf;
+
+  if(!(pf=fopen("ej2.txt","w")))return -1;
 
   srand(time(NULL));
 
@@ -53,8 +56,9 @@ int main(int argc, char** argv)
 
   /* print data */
   for(j = 0; j < num; j++) { 
-    printf("%d\n", random_num(inf, sup));
+    fprintf(pf, "%d\n", random_num(inf, sup));
   }
+  fclose(pf);
 
   return 0;
 }

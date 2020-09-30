@@ -29,11 +29,8 @@
 /***************************************************/
 int random_num(int inf, int sup)
 {
-  int n, diff;
-  diff = sup-inf;
-  n = rand() % (diff+1);
-  n += inf;
-  return n;
+
+  return (int)((double)rand()*(double)(sup-inf+1)/(double)RAND_MAX)+inf;
 }
 /***************************************************/
 /* Function: generate_perm Date:                   */

@@ -77,21 +77,20 @@ short average_sorting_time(pfunc_sort metodo,  int n_perms, int N, PTIME_AA ptim
 /***************************************************/
 short generate_sorting_times(pfunc_sort method, char* file, int num_min, int num_max, int incr, int n_perms)
 {
-  int i;
+  int i,j, n_times;
   short flag = OK;
   PTIME_AA ptime;
-  FILE *f;
 
-
+  if (incr == 0) return ERR;
   if(!method || !file ) return ERR;
-  if(!(f = fopen(file, "w"))) return ERR;
-  for(i=num_min;i<num_max && flag == OK; i+= incr){
-    if(!(ptime = (PTIME_AA)malloc(sizeof(TIME_AA)))) flag = ERR;
-    if(flag != ERR) flag = average_sorting_time(method,n_perms,i,ptime);
-    if(flag != ERR) flag = save_time_table(f, ptime,n_perms);
-    free(ptime);
+  n_times = (int) (num_max-num_min)/incr;
+  if(!(ptime = (PTIME_AA)malloc(n_times*sizeof(TIME_AA)))) flag = ERR;
+
+  for(i=num_min,j=0;i<=num_max && flag == OK && j<n_times; i+= incr,j++){
+    flag = average_sorting_time(method,n_perms,i,&ptime[j]);
   }
-  fclose(f);
+  if(flag != ERR) flag = save_time_table(file, ptime,n_times);
+  free(ptime);
   if(flag==ERR) return ERR;
   return OK;
 }
@@ -101,13 +100,20 @@ short generate_sorting_times(pfunc_sort method, char* file, int num_min, int num
 /*                                                 */
 /* Your documentation                              */
 /***************************************************/
-short save_time_table(FILE* file, PTIME_AA ptime, int n_times)
+short save_time_table(char* file, PTIME_AA ptime, int n_times)
 {
+  int i;
   short flag = OK;
-  if(!ptime) return ERR;
+  FILE *f;
 
-  flag = fprintf(file,"|   %d   | %lf |  %lf   |   %d   |   %d   |   %d   |\n",ptime->N,ptime->time,ptime->average_ob,ptime->max_ob,ptime->min_ob,n_times);
+  if(!ptime || !file) return ERR;
+  if(!(f = fopen(file,"w"))) return ERR;
+  
+  for(i=0; i< n_times && flag != -1;i++){
+    flag = fprintf(f,"|   %d   | %lf |  %lf   |   %d   |   %d   |\n",ptime[i].N,ptime[i].time,ptime[i].average_ob,ptime[i].max_ob,ptime[i].min_ob);
+  }
 
+  fclose(f);
   if (flag != -1)return OK;
   return ERR;
 }

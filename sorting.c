@@ -19,27 +19,27 @@
 int InsertSort(int* table, int ip, int iu)
 { 
   
-  int i, j, max, aux, cont=0;
+  int i, j, min, aux, cont=0;
 
   if(!table)return ERR;
 
   i=ip;
   while(i<iu){
 
-    max=i;
+    min=i;
 
     for(j=i+1;j<=iu;j++){
 
         cont++;
 
-        if(table[j]<table[max]){
-          max=j;
+        if(table[j]<table[min]){
+          min=j;
         }
         
     }
     aux=table[i];
-    table[i]=table[max];
-    table[max]=aux;
+    table[i]=table[min];
+    table[min]=aux;
     i++;
   }
 
@@ -49,27 +49,27 @@ int InsertSort(int* table, int ip, int iu)
 
 int InsertSortInv(int* table, int ip, int iu)
 {
-    int i, j, max, aux, cont=0;
+    int i, j, min, aux, cont=0;
 
   if(!table)return ERR;
 
   i=ip;
   while(i<iu){
 
-    max=i;
+    min=i;
 
     for(j=i+1;j<=iu;j++){
 
         cont++;
 
-        if(table[j]>table[max]){
-          max=j;
+        if(table[j]>table[min]){
+          min=j;
         }
         
     }
     aux=table[i];
-    table[i]=table[max];
-    table[max]=aux;
+    table[i]=table[min];
+    table[min]=aux;
     i++;
   }
 

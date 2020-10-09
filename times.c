@@ -50,8 +50,8 @@ short average_sorting_time(pfunc_sort metodo,  int n_perms, int N, PTIME_AA ptim
     end = clock();
     time += (end-begin)*(1000000/CLOCKS_PER_SEC);
 
-    if(max>a) max=a;
-    if(min<a) min=a;
+    if(max<a) max=a;
+    if(min>a) min=a;
     count +=a;
   }
   for(i=0;i<n_perms;i++){

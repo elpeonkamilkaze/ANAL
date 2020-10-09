@@ -16,63 +16,51 @@
 /* Function: InsertSort    Date:                   */
 /* Your comment                                    */
 /***************************************************/
-int InsertSort(int* table, int ip, int iu)
-{ 
-  
-  int i, j, min, aux, cont=0;
 
-  if(!table)return ERR;
+int InsertSort(int* tabla, int ip, int iu)
+{
+  int aux,i,j,cont=0;
+  if(!tabla||iu<0||ip<0) return -1;
 
-  i=ip;
-  while(i<iu){
+  for(i=ip+1;i<=iu;i++){
 
-    min=i;
+    aux=tabla[i];
+    j=i-1;
+    
+    for(;j>=ip && tabla[j]>aux;cont++){
 
-    for(j=i+1;j<=iu;j++){
-
-        cont++;
-
-        if(table[j]<table[min]){
-          min=j;
-        }
-        
+      tabla[j+1]=tabla[j];
+      j--;
+      
     }
-    aux=table[i];
-    table[i]=table[min];
-    table[min]=aux;
-    i++;
+    tabla[j+1]=aux;
+    cont++;
   }
-
+  
   return cont;
 }
 
 
 int InsertSortInv(int* table, int ip, int iu)
 {
-    int i, j, max, aux, cont=0;
+  int aux,i,j,cont=0;
+  if(!table||iu<0||ip<0) return -1;
 
-  if(!table)return ERR;
+  for(i=iu-1;i>=ip;i--){
 
-  i=ip;
-  while(i<iu){
-
-    max=i;
-
-    for(j=i+1;j<=iu;j++){
-
-        cont++;
-
-        if(table[j]>table[max]){
-          max=j;
-        }
-        
-    }
     aux=table[i];
-    table[i]=table[max];
-    table[max]=aux;
-    i++;
-  }
+    j=i-1;
+    
+    for(;j>=ip && table[j]>aux;cont++){
 
+      table[j+1]=table[j];
+      j--;
+      
+    }
+    table[j+1]=aux;
+    cont++;
+  }
+  
   return cont;
 }
 

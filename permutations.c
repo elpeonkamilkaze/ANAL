@@ -54,7 +54,7 @@ int* generate_perm(int N)
 
   for(i=0;i<N;i++){
 
-    perm[i]=i;
+    perm[i]=i+1;
 
   }
 for(i=0;i<N;i++){

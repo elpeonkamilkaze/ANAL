@@ -49,7 +49,8 @@ int main(int argc, char** argv)
     exit(-1);
   }
 
-  ret = InsertSort(perm, 0, tamano-1);
+  ret = InsertSortInv(perm, 0, tamano-1);
+  
 
   if (ret == ERR) {
     printf("Error: Error in InsertSort\n");

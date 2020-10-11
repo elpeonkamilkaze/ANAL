@@ -38,6 +38,7 @@ short average_sorting_time(pfunc_sort metodo,  int n_perms, int N, PTIME_AA ptim
   begin = clock();
   //Insert Sort solo da ERROR si array[i] es NULL., pero ya hemos comprobado que no lo es antes
   a = metodo(array[0],0,N-1);
+  
   max=a;
   min=a;
   count +=a; 
@@ -46,12 +47,14 @@ short average_sorting_time(pfunc_sort metodo,  int n_perms, int N, PTIME_AA ptim
   time += (end-begin)*(1000000/CLOCKS_PER_SEC); 
   for (i=1; i<n_perms; i++){
     begin = clock();
-    a = metodo(array[i],0,N-1);
+    a = (int)metodo(array[i],0,N-1);
     end = clock();
     time += (end-begin)*(1000000/CLOCKS_PER_SEC);
 
-    if(max<a) max=a;
-    if(min>a) min=a;
+    if(max<a)
+     max=a;
+    if(min>a)
+     min=a;
     count +=a;
   }
   for(i=0;i<n_perms;i++){
@@ -89,6 +92,7 @@ short generate_sorting_times(pfunc_sort method, char* file, int num_min, int num
   for(i=num_min,j=0;i<=num_max && flag == OK && j<n_times; i+= incr,j++){
     flag = average_sorting_time(method,n_perms,i,&ptime[j]);
   }
+
   if(flag != ERR) flag = save_time_table(file, ptime,n_times);
   free(ptime);
   if(flag==ERR) return ERR;

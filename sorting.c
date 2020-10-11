@@ -17,23 +17,23 @@
 /* Your comment                                    */
 /***************************************************/
 
-int InsertSort(int* tabla, int ip, int iu)
+int InsertSort(int* table, int ip, int iu)
 {
   int aux,i,j,cont=0;
-  if(!tabla||iu<0||ip<0) return -1;
+  if(!table||iu<0||ip<0) return ERR;
 
   for(i=ip+1;i<=iu;i++){
 
-    aux=tabla[i];
+    aux=table[i];
     j=i-1;
     
-    for(;j>=ip && tabla[j]>aux;cont++){
+    for(;j>=ip && table[j]>aux;cont++,j--){
 
-      tabla[j+1]=tabla[j];
-      j--;
+      table[j+1]=table[j];
+      
       
     }
-    tabla[j+1]=aux;
+    table[j+1]=aux;
     cont++;
   }
   
@@ -44,17 +44,17 @@ int InsertSort(int* tabla, int ip, int iu)
 int InsertSortInv(int* table, int ip, int iu)
 {
   int aux,i,j,cont=0;
-  if(!table||iu<0||ip<0) return -1;
+  if(!table||iu<0||ip<0) return ERR;
 
-  for(i=iu-1;i>=ip;i--){
+  for(i=ip+1;i<=iu;i++){
 
     aux=table[i];
     j=i-1;
     
-    for(;j>=ip && table[j]>aux;cont++){
+    for(;j>=ip && table[j]<aux;cont++, j--){
 
       table[j+1]=table[j];
-      j--;
+      
       
     }
     table[j+1]=aux;

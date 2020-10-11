@@ -71,6 +71,7 @@ return perm;
 
 }
 
+
 /***************************************************/
 /* Function: generate_permutations Date:           */
 /* Authors:                                        */

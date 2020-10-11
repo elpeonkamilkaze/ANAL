@@ -28,13 +28,15 @@ int InsertSort(int* table, int ip, int iu)
     j=i-1;
     
     for(;j>=ip && table[j]>aux;cont++,j--){
+      
 
       table[j+1]=table[j];
       
-      
+     
     }
+    if(j==i-1)cont++;
     table[j+1]=aux;
-    cont++;
+    
   }
   
   return cont;
@@ -57,9 +59,11 @@ int InsertSortInv(int* table, int ip, int iu)
       
       
     }
+    if(j==i-1)cont++;
     table[j+1]=aux;
-    cont++;
+    
   }
+  
   
   return cont;
 }

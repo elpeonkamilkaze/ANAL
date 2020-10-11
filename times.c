@@ -65,7 +65,7 @@ short average_sorting_time(pfunc_sort metodo,  int n_perms, int N, PTIME_AA ptim
   ptime->max_ob = max;
   ptime->min_ob = min;
   ptime->N = N;
-  ptime->average_ob = (double) (count/n_perms);
+  ptime->average_ob = (double)count/n_perms;
   ptime->n_elems = n_perms;
   ptime->time = time/n_perms;
   return OK;

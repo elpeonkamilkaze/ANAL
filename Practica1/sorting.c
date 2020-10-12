@@ -55,7 +55,7 @@ int InsertSortInv(int* table, int ip, int iu)
     aux=table[i];
     j=i-1;
     
-    for(;j>=ip && flag==1;cont++, j--){
+    for(;j>=ip && flag==1; j--){
       cont++;
 
       if(table[j]<aux) table[j+1]=table[j];

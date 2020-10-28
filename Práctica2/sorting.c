@@ -67,3 +67,59 @@ int InsertSortInv(int* table, int ip, int iu)
   return cont;
 }
 
+int merge(int *table, int ip, int iu, int imiddle){
+  int *t;
+  int i,j,k;
+
+  t = (int *)malloc((iu-ip+1)*sizeof(int));
+  if (!t) return ERR;
+
+  i = iu;
+  j = imiddle+1;
+  k = ip;
+
+  while (i<=imiddle && j<=iu){
+    if (table[i]<table[j]){
+      t[k] = table[i];
+      i++;
+    }
+    else{
+      t[k] = table[j];
+      j++;
+    }
+    k++;
+  }
+
+  if (i>imiddle){
+    while (j<=iu){
+      t[k] = table[j];
+      j++;
+      k++;
+    }
+  }
+  else if (j>iu){
+    while (i<=imiddle){
+      t[k] = table[i];
+      i++;
+      k++;
+    }
+  }
+  for(i=ip,j=0;i<iu;i++,j++){
+    table[i] = t[j];
+  }
+  free(t);
+  return OK;
+}
+
+int MergeSort(int* table, int ip, int iu){
+  int M;
+  if (!table || ip<0 || iu<0 || ip>iu) return ERR;
+
+  if (ip == iu) return OK;
+
+  M= ((ip+iu) - ((ip+iu) %2))/2;
+
+  MergeSort(table,ip,M);
+  MergeSort(table,M+1,iu);
+  return Combine(table,ip,M,iu);
+}

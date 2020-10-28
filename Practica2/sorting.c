@@ -128,3 +128,86 @@ int MergeSort(int* table, int ip, int iu){
   if(count2 == ERR) return ERR;
   return (count + count2);
 }
+
+
+int quicksort(int* table, int ip, int iu){
+
+    int *pos, cont=0;
+
+    pos=(int*)malloc(sizeof(int));
+    if(!pos){
+      
+      return ERR;
+    }
+    if(!table||ip<0||iu<0){
+      
+      free(pos);
+      return ERR;
+    }
+
+    if(iu<ip){
+      
+      free(pos);
+      return ERR;
+    }
+
+    if(ip==iu){
+      
+      free(pos);
+      return 0;
+    }
+
+    cont+=split(table, ip, iu, pos);
+
+    if(ip<((*pos)-1)){
+
+        cont+=quicksort(table, ip, ((*pos)-1));
+
+    }
+    if(((*pos)+1)<iu){
+
+        cont+=quicksort(table, ((*pos)+1), iu);
+
+    }
+
+    free(pos);
+    return cont;
+
+}
+
+int median(int *table, int ip, int iu,int *pos){
+
+    (*pos)=ip;
+
+    return 0;
+
+}
+
+int split(int* table, int ip, int iu,int *pos){
+
+    int i, k, aux, cont=0;
+
+    cont+=median(table, ip, iu, pos);
+
+    k=table[(*pos)];
+
+    for(i=ip+1;i<=iu;i++){
+        cont++;
+        if(table[i]<k){
+
+            (*pos)++;
+            aux=table[i];
+            table[i]=table[(*pos)];
+            table[(*pos)]=aux;
+
+        }
+
+    }
+
+    aux=table[ip];
+    table[ip]=table[(*pos)];
+    table[(*pos)]=aux;
+
+    return cont;
+
+}

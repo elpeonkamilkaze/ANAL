@@ -29,7 +29,6 @@
 /***************************************************/
 int random_num(int inf, int sup)
 {
-  printf("Hola\n");
   return (int)((double)rand()*(double)(sup-inf+1)/(double)RAND_MAX)+inf;
 }
 /***************************************************/

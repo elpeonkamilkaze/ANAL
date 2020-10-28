@@ -11,7 +11,8 @@
 
 #ifndef ORDENACION_H
 #define ORDENACION_H
-
+#include <stdio.h>
+#include <stdlib.h>
 /* constants */
 
 #ifndef ERR
@@ -27,6 +28,6 @@ typedef int (* pfunc_ordena)(int*, int, int);
 
 int InsertSort(int* table, int ip, int iu);
 int InsertSortInv(int* table, int ip, int iu);
-
+int MergeSort(int* table, int ip, int iu);
 
 #endif

@@ -69,14 +69,13 @@ int InsertSortInv(int* table, int ip, int iu)
 
 int merge(int *table, int ip, int iu, int imiddle){
   int *t;
-  int i,j,k;
-
+  int i,j,k,count=0;
   t = (int *)malloc((iu-ip+1)*sizeof(int));
   if (!t) return ERR;
 
-  i = iu;
+  i = ip;
   j = imiddle+1;
-  k = ip;
+  k = 0;
 
   while (i<=imiddle && j<=iu){
     if (table[i]<table[j]){
@@ -88,6 +87,7 @@ int merge(int *table, int ip, int iu, int imiddle){
       j++;
     }
     k++;
+    count++;
   }
 
   if (i>imiddle){
@@ -104,22 +104,27 @@ int merge(int *table, int ip, int iu, int imiddle){
       k++;
     }
   }
-  for(i=ip,j=0;i<iu;i++,j++){
+
+  for(i=ip,j=0;i<=iu;i++,j++){
     table[i] = t[j];
   }
   free(t);
-  return OK;
+  return count;
 }
 
 int MergeSort(int* table, int ip, int iu){
-  int M;
+  int M,count=0,count2;
   if (!table || ip<0 || iu<0 || ip>iu) return ERR;
-
   if (ip == iu) return OK;
 
   M= ((ip+iu) - ((ip+iu) %2))/2;
 
-  MergeSort(table,ip,M);
-  MergeSort(table,M+1,iu);
-  return Combine(table,ip,M,iu);
+  count= MergeSort(table,ip,M);
+  if (count == ERR) return ERR;
+  count2 = MergeSort(table,M+1,iu);
+  if (count2 == ERR) return ERR;
+  count += count2;
+  count2 = merge(table,ip,iu,M);
+  if(count2 == ERR) return ERR;
+  return (count + count2);
 }

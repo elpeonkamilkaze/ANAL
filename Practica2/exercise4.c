@@ -49,7 +49,7 @@ int main(int argc, char** argv)
     exit(-1);
   }
 
-  ret = InsertSort(perm, 0, tamano-1);
+  ret = MergeSort(perm, 0, tamano-1);
   
 
   if (ret == ERR) {
@@ -58,7 +58,7 @@ int main(int argc, char** argv)
     exit(-1);
   }
 
- 
+  printf("EL algoritmo hace %d operaciones básicas\n",ret);
   for(j = 0; j < tamano; j++) {
     printf("%d \t", perm[j]);
   }

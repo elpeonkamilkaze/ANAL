@@ -32,5 +32,6 @@ int MergeSort(int* table, int ip, int iu);
 int split(int* table, int ip, int iu,int *pos);
 int median(int *table, int ip, int iu,int *pos);
 int quicksort(int* table, int ip, int iu);
+int quicksortrec(int* table, int ip, int iu);
 
 #endif

@@ -29,5 +29,6 @@ typedef int (* pfunc_ordena)(int*, int, int);
 int InsertSort(int* table, int ip, int iu);
 int InsertSortInv(int* table, int ip, int iu);
 int MergeSort(int* table, int ip, int iu);
-
+int quicksort(int* table, int ip, int iu);
+int quicksortrec(int* table, int ip, int iu);
 #endif

@@ -130,47 +130,47 @@ int MergeSort(int* table, int ip, int iu){
 }
 
 
-int quicksortrec(int* table, int ip, int iu){
+int quicksort(int* table, int ip, int iu){
 
-    int *pos, cont=0;
+    int pos, cont=0, c;
 
-    pos=(int*)malloc(sizeof(int));
-    if(!pos){
-      
-      return ERR;
-    }
     if(!table||ip<0||iu<0){
       
-      free(pos);
+
       return ERR;
     }
 
     if(iu<ip){
       
-      free(pos);
+
       return ERR;
     }
 
     if(ip==iu){
       
-      free(pos);
+
       return 0;
     }
 
-    cont+=split(table, ip, iu, pos);
+    cont+=split(table, ip, iu, &pos);
 
-    if(ip<((*pos)-1)){
+    if(ip<((pos)-1)){
 
-        cont+=quicksortrec(table, ip, ((*pos)-1));
+        c=quicksort(table, ip, ((pos)-1));
+        if(c==-1)return ERR;
 
-    }
-    if(((*pos)+1)<iu){
-
-        cont+=quicksortrec(table, ((*pos)+1), iu);
+        cont+=c;
 
     }
+    if(iu>pos+1)
+    
+        c=quicksort(table, ((pos)+1), iu);
+        if(c==-1)return ERR;
 
-    free(pos);
+        cont+=c;
+
+   
+
     return cont;
 
 }
@@ -212,41 +212,30 @@ int split(int* table, int ip, int iu,int *pos){
 
 }
 
-int quicksort(int* table, int ip, int iu){
+int quicksortntr(int* table, int ip, int iu){
 
-    int *pos, cont=0;
+    int pos, cont=0, c=0;
 
     if(iu<ip||!table||ip<0||iu<0){
-      free(pos);
       
       return ERR;
     }
 
+  while(ip<iu){
+   
+        cont+=split(table, ip, iu, &pos);
 
-    pos=(int*)malloc(sizeof(int));
-    if(!pos){
-      
-      return ERR;
+        if(ip<((pos)-1)){
+  
+            c=quicksortntr(table, ip, pos-1);
+            if(c==-1)return ERR;
+
+            cont+=c;
+
+        } 
+        
+        ip=(pos)+1;
+
     }
-
-    while(ip!=iu){
-
-
-        cont+=split(table, ip, iu, pos);
-
-        if(ip<((*pos)-1)){
-
-            iu=(*pos)-1;
-
-        }
-        else if(((*pos)+1)<iu){
-
-            ip=(*pos)+1;
-
-        }
-}
-
-    free(pos);
     return cont;
-
 }

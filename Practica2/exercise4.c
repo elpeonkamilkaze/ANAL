@@ -48,16 +48,11 @@ int main(int argc, char** argv)
     printf("Error: Out of memory\n");
     exit(-1);
   }
-<<<<<<< HEAD
  
-  /*for(j = 0; j < tamano; j++) {
+  for(j = 0; j < tamano; j++) {
     printf("%d \t", perm[j]);
-  }*/
-  ret = MergeSort(perm, 0, tamano-1);
-=======
-
+  }
   ret = quicksort(perm, 0, tamano-1);
->>>>>>> 56ad664b3cda21ea8747dc7a20984ab323d151c5
   
 
   if (ret == ERR) {
@@ -66,10 +61,10 @@ int main(int argc, char** argv)
     exit(-1);
   }
 
-  /*printf("EL algoritmo hace %d operaciones básicas\n",ret);
+  printf("EL algoritmo hace %d operaciones básicas\n",ret);
   for(j = 0; j < tamano; j++) {
     printf("%d \t", perm[j]);
-  }*/
+  }
   printf("\n");
   
 

@@ -36,14 +36,14 @@ short average_sorting_time(pfunc_sort metodo,  int n_perms, int N, PTIME_AA ptim
   if(!(array = generate_permutations(n_perms,N)))return ERR;
 
   begin = clock();
-  //Insert Sort solo da ERROR si array[i] es NULL., pero ya hemos comprobado que no lo es antes
+  /*Insert Sort solo da ERROR si array[i] es NULL., pero ya hemos comprobado que no lo es antes*/
   a = metodo(array[0],0,N-1);
   
   max=a;
   min=a;
   count +=a; 
   end = clock();
-  //La unidad de tiempo serán los microsegundos
+  /*La unidad de tiempo serán los microsegundos*/
   time += (end-begin)*(1000000/CLOCKS_PER_SEC); 
   for (i=1; i<n_perms; i++){
     begin = clock();

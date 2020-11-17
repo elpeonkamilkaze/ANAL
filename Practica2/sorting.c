@@ -17,6 +17,7 @@
 /* Your comment                                    */
 /***************************************************/
 
+int split(int* table, int ip, int iu,int *pos);
 
 int InsertSort(int* table, int ip, int iu)
 {
@@ -162,12 +163,10 @@ int quicksort(int* table, int ip, int iu){
         cont+=c;
 
     }
-    if(iu>pos+1)
-    
-        c=quicksort(table, ((pos)+1), iu);
-        if(c==-1)return ERR;
+    if(iu>pos+1)c=quicksort(table, ((pos)+1), iu);
+    if(c==-1)return ERR;
 
-        cont+=c;
+    cont+=c;
 
    
 

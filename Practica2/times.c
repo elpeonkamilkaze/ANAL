@@ -116,7 +116,7 @@ short save_time_table(char* file, PTIME_AA ptime, int n_times)
 
   fprintf(f,"Size,Time,average_ob,max_ob,min_ob\n");
   for(i=0; i< n_times && flag != -1;i++){
-    flag = fprintf(f,"%d,%lf,%lf,%d,%d\n",ptime[i].N,ptime[i].time,ptime[i].average_ob,ptime[i].max_ob,ptime[i].min_ob);
+    flag = fprintf(f,"%d,%f,%f,%d,%d\n",ptime[i].N,ptime[i].time,ptime[i].average_ob,ptime[i].max_ob,ptime[i].min_ob);
   }
 
   fclose(f);

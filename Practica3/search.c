@@ -10,7 +10,7 @@
  */
 
 #include "search.h"
-
+#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
@@ -56,7 +56,7 @@ void potential_key_generator(int *keys, int n_keys, int max)
   return;
 }
 
-PDICT init_dictionary (int size, char order){
+PDICT init_dictionary (int size, int order){
 
   DICT* dict=NULL;
 
@@ -113,10 +113,8 @@ int insert_dictionary(PDICT pdict, int key){
 
   else{
 
-    pdict->table[pdict->n_data]=key;
-    F=pdict->table[0];
-    L=pdict->table[pdict->n_data];
-    aux=pdict->table[L];
+    L=pdict->n_data;
+    aux=key;
     j=L-1;
     while(j>=F && pdict->table[j]>aux){
       cont++;
@@ -126,8 +124,9 @@ int insert_dictionary(PDICT pdict, int key){
     }
     if(j>=F)cont++;
 
-    pdict->table[j+1]=aux;
+    pdict->table[j+1]=key;
     pdict->n_data++;
+
     return cont;
 
   }
@@ -152,8 +151,8 @@ int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method){
 
   if(!pdict||!method||!ppos)return ERR;
 
-  F=pdict->table[0];
-  F=pdict->table[pdict->n_data];
+  F=0;
+  L=pdict->n_data;
 
   cont=method(pdict->table, F, L, key ,ppos);
 
@@ -167,33 +166,34 @@ int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method){
 /* Search functions of the Dictionary ADT */
 int bin_search(int *table,int F,int L,int key, int *ppos)
 {
-  int m = (int)F+L/2;
+  int m = (int)((F+L)/2);
   int count=1;
   int flag = OK;
-
-	if(!table||!ppos) return ERR;
-  if(F>L) return NOT_FOUND;
+  
+	if(!table||!ppos||F>L)return ERR;
+  
   if(F==L) {
     if (table[F]== key) {
-      *ppos = F;
+      *ppos = F+1;
       return count;
     }
-    return NOT_FOUND;
+    *ppos=NOT_FOUND;
+    return count;
   }
 
 
   if(table[m]== key){
-    *ppos = m;
+    *ppos = m+1;
     return count;
   }
 
-  else if(table[m]>key){
-    flag = bin_search(table,m+1,L,key,*ppos);
+  else if(table[m]<key){
+    flag = bin_search(table,m+1,L,key,ppos);
     if(flag == ERR) return ERR;
     return count + flag;
   }
   else{
-    flag = bin_search(table,F,m-1,key,*ppos);
+    flag = bin_search(table,F,m-1,key,ppos);
     if(flag == ERR) return ERR;
     return count + flag;
   }
@@ -205,13 +205,13 @@ int lin_search(int *table,int F,int L,int key, int *ppos){
 
   if(!table||L<F||!ppos)return ERR;
 
-  size=F-L+1;
+  size=L-F+1;
 
   for (i = 0; i < size; i++){ 
     cont++;
     if (table[i] == key){
 
-      *ppos=i;
+      *ppos=i+1;
       return cont;
 
     }
@@ -228,7 +228,7 @@ int lin_auto_search(int *table,int F,int L,int key, int *ppos)
   if(!table||!ppos) return ERR;
 
   if(table[F]==key){
-    *ppos = F;
+    *ppos = F+1;
     return count;
   }
   for(i=F+1;i<=L;i++){
@@ -237,7 +237,7 @@ int lin_auto_search(int *table,int F,int L,int key, int *ppos)
       aux = table[i-1];
       table[i-1]=table[i];
       table[i] = aux;
-      *ppos = i-1;
+      *ppos = i;
       return count;
     } 
   }

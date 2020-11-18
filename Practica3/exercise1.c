@@ -22,7 +22,7 @@
 
 int main(int argc, char** argv)
 {
-  int i, nob, pos;
+  int i, nob, pos, j;
   unsigned int key, size;
   PDICT pdict;
   int *perm;
@@ -55,6 +55,7 @@ int main(int argc, char** argv)
 
   pdict = init_dictionary(size,NOT_SORTED);
 
+
   if (pdict == NULL) {
     /* error */
     printf("Error: Dictionary could not be initialized\n");
@@ -80,8 +81,8 @@ int main(int argc, char** argv)
     exit(-1);
   }
 
-  nob = search_dictionary(pdict,key,&pos,lin_search);
-
+  nob = search_dictionary(pdict,key,&pos,lin_auto_search);
+  
   if(nob >= 0) {
     printf("Key %d found in position %d in %d basic op.\n",key,pos,nob);
   } else if (nob==NOT_FOUND) {
@@ -89,6 +90,7 @@ int main(int argc, char** argv)
   } else {
     printf("Error when searching the key %d\n",key);
   }
+ 
 
   free(perm);
   free_dictionary(pdict);

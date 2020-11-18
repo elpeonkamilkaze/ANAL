@@ -29,7 +29,7 @@
 typedef struct dictionary {
   int size; /* table size */
   int n_data; /* number of entries in the table */
-  char order;  /* sorted or unsorted table */
+  int order;  /* sorted or unsorted table */
   int *table;  /* data table */
 } DICT, *PDICT;
 
@@ -37,7 +37,7 @@ typedef int (* pfunc_search)(int*, int, int, int, int*);
 typedef void (* pfunc_key_generator)(int*, int, int);
 
 /* Dictionary ADT */
-PDICT init_dictionary (int size, char order);
+PDICT init_dictionary (int size, int order);
 void free_dictionary(PDICT pdict);
 int insert_dictionary(PDICT pdict, int key);
 int massive_insertion_dictionary (PDICT pdict,int *keys, int n_keys);

@@ -157,7 +157,7 @@ int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method){
 
   cont=method(pdict->table, F, L, key ,ppos);
 
-  if(*ppos==NOT_FOUND||cont==ERR)return ERR;
+  if(*ppos==NOT_FOUND)return NOT_FOUND;
 
   return cont;
 
@@ -195,7 +195,7 @@ int bin_search(int *table,int F,int L,int key, int *ppos)
   else{
     flag = bin_search(table,F,m-1,key,*ppos);
     if(flag == ERR) return ERR;
-    return count + flag
+    return count + flag;
   }
 }
 

@@ -188,12 +188,12 @@ int bin_search(int *table,int F,int L,int key, int *ppos)
   }
 
   else if(table[m]>key){
-    flag = bin_search(table,m+1,L,key,*ppos);
+    flag = bin_search(table,m+1,L,key,ppos);
     if(flag == ERR) return ERR;
     return count + flag;
   }
   else{
-    flag = bin_search(table,F,m-1,key,*ppos);
+    flag = bin_search(table,F,m-1,key,ppos);
     if(flag == ERR) return ERR;
     return count + flag;
   }

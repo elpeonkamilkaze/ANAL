@@ -56,9 +56,30 @@ void potential_key_generator(int *keys, int n_keys, int max)
   return;
 }
 
-PDICT init_dictionary (int size, char order)
-{
-	/* your code */
+PDICT init_dictionary (int size, char order){
+
+  DICT* dict=NULL;
+
+  if(size<=0||(order!=SORTED && order!=NOT_SORTED))return NULL;
+
+  dict=(DICT*)calloc(1, sizeof(DICT));
+  if(!dict)return NULL;
+
+  dict->size=size;
+  dict->order=order;
+
+  dict->table=(int*)calloc(size, sizeof(int));
+  if(!dict->table){
+
+    free_dictionary(dict);
+    return NULL;
+
+  }
+
+  dict->n_data=0;
+
+  return dict;
+
 }
 
 void free_dictionary(PDICT pdict)
@@ -69,9 +90,47 @@ void free_dictionary(PDICT pdict)
   }
 }
 
-int insert_dictionary(PDICT pdict, int key)
-{
-	/* your code */
+int insert_dictionary(PDICT pdict, int key){
+
+  int j=0, aux=0, L=0, F=0, cont=0;
+
+  if(!pdict)return ERR;
+
+  if(pdict->size==pdict->n_data){
+
+    pdict->size=pdict->size*2;
+    pdict=realloc(pdict, pdict->size*(sizeof(PDICT)));
+    if(!pdict)return ERR;
+
+  }
+  if(pdict->order==NOT_SORTED||pdict->n_data==0){
+
+      pdict->table[pdict->n_data]=key;
+      pdict->n_data++;
+      return 1;
+
+  }
+
+  else{
+
+    pdict->table[pdict->n_data]=key;
+    F=pdict->table[0];
+    L=pdict->table[pdict->n_data];
+    aux=pdict->table[L];
+    j=L-1;
+    while(j>=F && pdict->table[j]>aux){
+      cont++;
+      pdict->table[j+1]=pdict->table[j];
+      j--;
+
+    }
+    if(j>=F)cont++;
+
+    pdict->table[j+1]=aux;
+    pdict->n_data++;
+    return cont;
+
+  }
 }
 
 int massive_insertion_dictionary (PDICT pdict,int *keys, int n_keys)
@@ -87,9 +146,21 @@ int massive_insertion_dictionary (PDICT pdict,int *keys, int n_keys)
   return count;
 }
 
-int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method)
-{
-	/* your code */
+int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method){
+
+  int cont=0, F=0, L=0;
+
+  if(!pdict||!method||!ppos)return ERR;
+
+  F=pdict->table[0];
+  F=pdict->table[pdict->n_data];
+
+  cont=method(pdict->table, F, L, key ,ppos);
+
+  if(*ppos==NOT_FOUND||cont==ERR)return ERR;
+
+  return cont;
+
 }
 
 
@@ -115,16 +186,34 @@ int bin_search(int *table,int F,int L,int key, int *ppos)
   }
 
   else if(table[m]>key){
-    return bin_search(table,m+1,L,key,*ppos);
+    return bin_search(table,m+1,L,key,ppos);
   }
   else{
-    return bin_search(table,F,m-1,key,*ppos);
+    return bin_search(table,F,m-1,key,ppos);
   }
 }
 
-int lin_search(int *table,int F,int L,int key, int *ppos)
-{
-	/* your code */
+int lin_search(int *table,int F,int L,int key, int *ppos){
+
+  int i=0, size=0, cont=0; 
+
+  if(!table||L<F||!ppos)return ERR;
+
+  size=F-L+1;
+
+  for (i = 0; i < size; i++){ 
+    cont++;
+    if (table[i] == key){
+
+      *ppos=i;
+      return cont;
+
+    }
+      
+  }
+    *ppos=NOT_FOUND;
+    return cont; 
+
 }
 
 int lin_auto_search(int *table,int F,int L,int key, int *ppos)

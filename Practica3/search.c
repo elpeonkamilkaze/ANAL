@@ -168,13 +168,15 @@ int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method){
 int bin_search(int *table,int F,int L,int key, int *ppos)
 {
   int m = (int)F+L/2;
+  int count=1;
+  int flag = OK;
 
 	if(!table||!ppos) return ERR;
   if(F>L) return NOT_FOUND;
   if(F==L) {
     if (table[F]== key) {
       *ppos = F;
-      return OK;
+      return count;
     }
     return NOT_FOUND;
   }
@@ -182,7 +184,7 @@ int bin_search(int *table,int F,int L,int key, int *ppos)
 
   if(table[m]== key){
     *ppos = m;
-    return OK;
+    return count;
   }
 
   else if(table[m]>key){
@@ -235,7 +237,7 @@ int lin_auto_search(int *table,int F,int L,int key, int *ppos)
       return count;
     } 
   }
-  return NOT_FOUND;
+  return count;
 }
 
 

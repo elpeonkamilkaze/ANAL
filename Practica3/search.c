@@ -170,7 +170,12 @@ int bin_search(int *table,int F,int L,int key, int *ppos)
   int count=1;
   int flag = OK;
   
-	if(!table||!ppos||F>L)return ERR;
+	if(!table||!ppos)return ERR;
+
+  if(F>L){
+    *ppos=NOT_FOUND;
+    return 0;
+  }
   
   if(F==L) {
     if (table[F]== key) {

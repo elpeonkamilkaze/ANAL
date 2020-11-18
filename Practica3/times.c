@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "times.h"
-#include "sorting.h"
+#include "search.h"
 #include "permutations.h"
 
 /***************************************************/

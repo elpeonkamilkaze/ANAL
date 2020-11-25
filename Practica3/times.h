@@ -20,6 +20,7 @@
 #endif
 
 #include "sorting.h"
+#include "search.h"
 
 /* type definitions */
 typedef struct time_aa {

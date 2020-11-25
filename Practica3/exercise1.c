@@ -22,7 +22,7 @@
 
 int main(int argc, char** argv)
 {
-  int i, nob, pos, j;
+  int i, nob, pos;
   unsigned int key, size;
   PDICT pdict;
   int *perm;

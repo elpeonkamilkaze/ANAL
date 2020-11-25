@@ -247,3 +247,70 @@ int lin_auto_search(int *table,int F,int L,int key, int *ppos)
 }
 
 
+short average_search_time(pfunc_search metodo, pfunc_key_generator generator,int order,int N, int n_times,PTIME_AA ptime){
+
+  PDICT d=NULL;
+  int *perm, count, *table;
+  clock_t begin,end;
+  double time=0;
+  int max=0,min,count=0, a, ppos, j;
+
+  d=init_dictionary(N, order);
+
+  if(!d)return ERR;
+
+  perm=generate_perm(N);
+
+  if(!perm){
+    free_dictionary(d);
+  }
+
+  count=massive_insertion_dictionary(d, perm, N);
+  if(count==ERR){
+
+    free_dictionary(d);
+    free(perm);
+  }
+  free(perm);
+
+  table=(int*)malloc(N*n_times*(sizeof(int)));
+  if(!table){
+    free_dictionary(d);
+    return ERR;
+  }
+
+  generator(table, N*n_times, N);
+
+
+  begin =clock();
+
+  a=metodo(d->table, 0, N-1, table[0], &ppos);
+  max=a;
+  min=a;
+  count +=a; 
+  end = clock();
+  /*La unidad de tiempo serán los microsegundos*/
+  time += (end-begin)*(1000000/CLOCKS_PER_SEC); 
+  for (j=1; j<N*n_times; j++){
+    begin = clock();
+    a = metodo(d->table, 0, N-1, table[j], &ppos);
+    end = clock();
+    time += (end-begin)*(1000000/CLOCKS_PER_SEC);
+
+    if(max<a)
+     max=a;
+    if(min>a)
+     min=a;
+    count +=a;
+  }
+  
+  free(table);
+
+  ptime->max_ob = max;
+  ptime->min_ob = min;
+  ptime->N = N;
+  ptime->average_ob = (double)count/(N*n_times);
+  ptime->n_elems = (N*n_times);
+  ptime->time = time/(N*n_times);
+  return OK;
+}

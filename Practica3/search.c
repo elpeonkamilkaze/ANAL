@@ -152,7 +152,6 @@ int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method){
 
   if(!pdict||!method||!ppos)return ERR;
 
-  F=0;
   L=pdict->n_data;
 
   cont=method(pdict->table, F, L, key ,ppos);

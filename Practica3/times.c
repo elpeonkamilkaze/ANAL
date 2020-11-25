@@ -182,7 +182,7 @@ short average_search_time(pfunc_search metodo, pfunc_key_generator generator,int
   }
   
   free(table);
-
+  free_dictionary(d);
   ptime->max_ob = max;
   ptime->min_ob = min;
   ptime->N = N;
@@ -193,18 +193,19 @@ short average_search_time(pfunc_search metodo, pfunc_key_generator generator,int
 }
 
 short generate_search_times(pfunc_search method, pfunc_key_generator generator, int order, char* file, int num_min, int num_max, int incr, int n_times){
-  int i,flag = OK;
+  int i,j,flag = OK;
+  int times;
   PTIME_AA ptime;
 
   if(!file||!method||!generator) return ERR;
+  times = (int) (num_max-num_min)/incr;
+  if(!(ptime = (PTIME_AA)malloc(times*sizeof(TIME_AA)))) return ERR;
 
-  if(!(ptime = (PTIME_AA)malloc(sizeof(TIME_AA)))) return ERR;
-
-  for(i=num_min;i<=num_max && flag == OK;i+=incr){
-    flag = average_search_time(method, generator, order,i,  n_times, ptime);
-    if(flag == OK) flag = save_time_table( file,  ptime, n_times);
+  for(i=num_min,j=0;i<=num_max && flag == OK && j< times;i+=incr,j++){
+    flag = average_search_time(method, generator, order,i,  n_times, &ptime[j]);
   }
 
+  if(flag == OK) flag = save_time_table( file,  ptime, n_times);
   free(ptime);
 
 

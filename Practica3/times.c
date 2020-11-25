@@ -205,7 +205,7 @@ short generate_search_times(pfunc_search method, pfunc_key_generator generator, 
     flag = average_search_time(method, generator, order,i,  n_times, &ptime[j]);
   }
 
-  if(flag == OK) flag = save_time_table( file,  ptime, n_times);
+  if(flag == OK) flag = save_time_table( file,  ptime, times);
   free(ptime);
 
 

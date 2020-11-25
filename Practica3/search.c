@@ -108,7 +108,7 @@ int insert_dictionary(PDICT pdict, int key){
 
       pdict->table[pdict->n_data]=key;
       pdict->n_data++;
-      return 1;
+      return 0;
 
   }
 

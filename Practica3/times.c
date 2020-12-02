@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <inttypes.h>
 #include "times.h"
 #include "search.h"
 #include "permutations.h"
@@ -86,10 +87,11 @@ short generate_sorting_times(pfunc_sort method, char* file, int num_min, int num
 
   if (incr == 0) return ERR;
   if(!method || !file ) return ERR;
+
   n_times = (int) (num_max-num_min)/incr;
   if(!(ptime = (PTIME_AA)malloc(n_times*sizeof(TIME_AA)))) flag = ERR;
 
-  for(i=num_min,j=0;i<=num_max && flag == OK && j<n_times; i+= incr,j++){
+  for(i=num_min,j=0;i<=num_max && flag == OK && j<n_times; i*= incr,j++){
     flag = average_sorting_time(method,n_perms,i,&ptime[j]);
   }
 
@@ -123,12 +125,23 @@ short save_time_table(char* file, PTIME_AA ptime, int n_times)
   if (flag != -1)return OK;
   return ERR;
 }
+static int logn(int numero,int base){
+  int res=0,comp=1;
+  if(base<=0) return 0;
+  while(numero >comp){
+    comp *= base;
+    res++;
+  }
+  return res;
+}
+
 
 short average_search_time(pfunc_search metodo, pfunc_key_generator generator,int order,int N, int n_times,PTIME_AA ptime){
 
   PDICT d=NULL;
   int *perm, count=0, *table;
   clock_t begin,end;
+  
   double time=0;
   int max=0,min, a, flag, ppos, j;
 
@@ -162,10 +175,10 @@ short average_search_time(pfunc_search metodo, pfunc_key_generator generator,int
   begin =clock();
 
   a=metodo(d->table, 0, N-1, table[0], &ppos);
+  end = clock();
   max=a;
   min=a;
   count +=a; 
-  end = clock();
   /*La unidad de tiempo serán los microsegundos*/
   time += (end-begin)*(1000000/CLOCKS_PER_SEC); 
   for (j=1; j<N*n_times; j++){
@@ -198,10 +211,10 @@ short generate_search_times(pfunc_search method, pfunc_key_generator generator, 
   PTIME_AA ptime;
 
   if(!file||!method||!generator) return ERR;
-  times = (int) (num_max-num_min)/incr;
+  times = logn(num_max/num_min,incr);
   if(!(ptime = (PTIME_AA)malloc(times*sizeof(TIME_AA)))) return ERR;
 
-  for(i=num_min,j=0;i<=num_max && flag == OK && j< times;i+=incr,j++){
+  for(i=num_min,j=0;i<=num_max && flag == OK && j< times;i*=incr,j++){
     flag = average_search_time(method, generator, order,i,  n_times, &ptime[j]);
   }
 
